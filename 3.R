@@ -48,3 +48,18 @@ one_hot_coding = function (x) {
 
 x = c(0, 1, 2, 1, NA, 2)
 one_hot_coding(x)
+
+#在線性迴歸中使用類別變項(3)
+#有了這項技術以後，那就可以把剛剛的Income以及Education都納入回歸之內了：
+coding_Income = one_hot_coding(dat[,"Income"])
+coding_Education = one_hot_coding(dat[,"Education"])
+
+dat1 = cbind(dat, coding_Income, coding_Education)
+
+lm(dat[,"eGFR"] ~ ., data = dat1[,c(7:8, 11:14)])
+
+#不過其實這整個過程都可以更簡單，你只要告訴R說Income以及Education都是因子變項即可：
+lm(dat[,"eGFR"] ~ dat[,"SBP"] + dat[,"DBP"] + factor(dat[,"Income"]) + factor(dat[,"Education"]))
+
+
+
