@@ -45,3 +45,33 @@ prop.table(tab2)
 prop.table(tab2, 1)
 
 prop.table(tab2, 2)
+
+#磞瓃┦参璸(2)
+#ノまㄧ计и盢眔琘贺兵ン磞瓃┦参璸羭ㄒㄓ弧и稱莉眔case舱eGFRキА计ㄏノ粂猭
+mean(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE)
+
+#Control舱ョ
+mean(dat[dat[,"Disease"] == 0,]$eGFR, na.rm = TRUE)
+
+#狦и稱璶рキА计∮夹非畉ボㄓノㄧ计paste()┪ㄧ计paste0()
+paste(mean(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE), "∮", sd(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE), sep = "")
+
+paste0(mean(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE), "∮", sd(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE))
+
+#и祇瞷硂妓瞷讽拎иㄏノㄧ计formatC()ㄓ﹚и稱璶计翴计
+m = mean(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE)
+s = sd(dat[dat[,"Disease"] == 1,]$eGFR, na.rm = TRUE)
+formatC(m, digits = 3, format = "f")
+
+formatC(s, digits = 3, format = "f")
+
+paste0(formatC(m, digits = 3, format = "f"), "∮", formatC(s, digits = 3, format = "f"))
+
+
+
+
+
+
+
+
+
