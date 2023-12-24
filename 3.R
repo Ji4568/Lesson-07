@@ -6,3 +6,45 @@ x = c(0, 1, 2, 1, NA, 2)
 coding_x = matrix(c(0, 1, 0, 1, NA, 0,
                     0, 0, 1, 0, NA, 1), nrow = 6, ncol = 2)
 coding_x
+
+#在線性迴歸中使用類別變項(2)
+#至於要怎樣把他轉換成這個格式呢?第一種方法就是用迴圈填數字，我們可以用這種方式：
+x = c(0, 1, 2, 1, NA, 2)
+
+lvl.cat = levels(factor(x))
+n.cat = length(lvl.cat)
+coding_x = matrix(0, nrow = length(x), ncol = n.cat - 1)
+
+for (i in 1:(n.cat-1)) {
+  coding_x[x == lvl.cat[i+1],i] = 1
+}
+
+coding_x[is.na(x),] = NA
+
+coding_x
+
+#另外有一種更簡單的方式，就是使用R內建的函數「model.matrix」
+x = c(0, 1, 2, 1, NA, 2)
+coding_x = model.matrix(~as.factor(x))
+coding_x
+#你應該會注意到使用「model.matrix」與我們想要的不太一樣(多了Intercept以及NA被移除了)，所以我們還要稍微修正一下他：
+new_index = 1:length(x)
+new_index[is.na(x)] = NA
+new_index[!is.na(new_index)] = 1:sum(!is.na(x))
+coding_x = coding_x[new_index,-1]
+rownames(coding_x) = 1:nrow(coding_x)
+#我們把他整理成同個函數：
+one_hot_coding = function (x) {
+  
+  coding_x = model.matrix(~as.factor(x))
+  new_index = 1:length(x)
+  new_index[is.na(x)] = NA
+  new_index[!is.na(new_index)] = 1:sum(!is.na(x))
+  coding_x = coding_x[new_index,-1]
+  rownames(coding_x) = 1:nrow(coding_x)
+  coding_x
+  
+}
+
+x = c(0, 1, 2, 1, NA, 2)
+one_hot_coding(x)
