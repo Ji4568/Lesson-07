@@ -33,6 +33,18 @@ model
 #所以以後其實我們要做這件事情其實用函數「lm」就可以了，我們試著把裡面的係數叫出來。
 model$coefficients
 
+#線性迴歸(5)
+#假設我們使用的是剛剛的資料，讓我們看看使用函數「lm」的方法：
+lm(SBP~DBP, data = dat)
+
+lm(dat[,"eGFR"]~dat[,"SBP"])
+
+#比較有趣的地方是，我們其實可以同時使用多個變數一起預測SBP：
+lm(dat[,"eGFR"] ~ dat[,"SBP"] + dat[,"DBP"])
+
+#為了應付可能需要擴充變項，你需要學會用這種方法來進行預測（這邊要特別注意drop=FALSE的效果）：
+lm(dat[,"eGFR"] ~ ., data = dat[,c("SBP", "DBP"),drop=FALSE])
+
 
 
 
